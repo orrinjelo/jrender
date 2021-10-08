@@ -26,6 +26,7 @@ public:
         double reflection,
         double radius
     );
+    ~Sphere();
 
     // TODO: make setters for double[3]
 

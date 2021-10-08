@@ -19,6 +19,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
+find_package(
+    Boost
+    COMPONENTS program_options
+    REQUIRED
+)
+
 # Executable
 add_executable(
     jrender
@@ -28,6 +34,7 @@ add_executable(
     src/Light.cpp
     src/Object.cpp
     src/Sphere.cpp
+    src/Render.cpp
 )
 
 target_compile_features (
@@ -47,6 +54,8 @@ target_include_directories (
     jrender
     PUBLIC 
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        /usr/include/png++/
+        ${Boost_INCLUDE_DIRS}
 )
 
 target_link_libraries(
@@ -55,3 +64,39 @@ target_link_libraries(
         Threads::Threads
         m
 )
+
+# Tests
+add_executable(
+    unit_tests 
+    test/test_units.cpp
+    src/Camera.cpp
+    src/Screen.cpp
+    src/Light.cpp
+    src/Object.cpp
+    src/Sphere.cpp
+    src/Render.cpp    
+)
+
+# indicates the include paths
+target_include_directories(
+    unit_tests 
+    PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        /usr/include/png++/
+        ${Boost_INCLUDE_DIRS}
+)
+
+# indicates the shared library variant
+target_compile_definitions(
+    unit_tests 
+    PRIVATE 
+        "BOOST_TEST_DYN_LINK=1"
+)
+
+# indicates the link paths
+target_link_libraries(
+    unit_tests 
+    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+)
+
+add_test(NAME unit_tests COMMAND unit_tests)

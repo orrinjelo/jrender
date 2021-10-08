@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+#include <memory>
 #include "tnt_types.h"
 
 class Object {
@@ -22,6 +24,7 @@ public:
         double shininess,
         double reflection
     );
+    virtual ~Object();
 
     // TODO: make setters for double[3]
 
@@ -43,7 +46,7 @@ public:
     double getReflection();
     void setReflection(double x);
 
-    // virtual std::pair<bool, double> intersect( double_1darray origin, double_1darray destination );
+    virtual std::pair<bool, double> intersect( double_1darray origin, double_1darray destination );
 
 protected:
     double_1darray position_;
@@ -53,3 +56,7 @@ protected:
     double         shininess_;
     double         reflection_;
 };
+
+
+typedef std::unique_ptr<Object> obj_ptr;
+typedef std::vector<Object*> obj_vector;

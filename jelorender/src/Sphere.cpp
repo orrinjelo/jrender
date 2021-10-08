@@ -24,6 +24,8 @@ Sphere::Sphere(
 ) : Object(position, ambient, diffuse, specular, shininess, reflection), radius_(radius)
 {}
 
+Sphere::~Sphere() {}
+
 double Sphere::getRadius() {
     return radius_;
 }

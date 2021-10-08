@@ -39,6 +39,8 @@ Object::Object(
     reflection_ = reflection;
 }
 
+Object::~Object() {}
+
 double_1darray Object::getPosition() {
     return position_;
 }
@@ -85,4 +87,8 @@ double Object::getReflection() {
 
 void Object::setReflection(double x) {
     reflection_ = x;
+}
+
+std::pair<bool, double> Object::intersect( double_1darray origin, double_1darray destination ) {
+    return std::pair<bool, double>(false, 0.0);
 }

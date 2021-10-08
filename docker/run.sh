@@ -1,2 +1,2 @@
 #!/bin/bash 
-docker run --volume=/home/orrinjelo/sandbox/render/:/render -ti --rm jelorender
+docker run --volume=/home/orrinjelo/sandbox/jrender/:/render -ti --rm jelorender
