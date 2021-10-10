@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18.0)
+cmake_minimum_required(VERSION 3.16.0)
 include(CMakePrintHelpers)
 project(jelorender VERSION 1.0.0 LANGUAGES CXX C)
 
@@ -63,6 +63,7 @@ target_link_libraries(
     PRIVATE
         Threads::Threads
         m
+        png
 )
 
 # Tests
@@ -97,6 +98,8 @@ target_compile_definitions(
 target_link_libraries(
     unit_tests 
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+    m
+    png
 )
 
 add_test(NAME unit_tests COMMAND unit_tests)

@@ -28,12 +28,33 @@ public:
     );
     ~Sphere();
 
-    // TODO: make setters for double[3]
-
     double getRadius();
     void setRadius(double x);
 
     std::pair<bool, double> intersect( double_1darray origin, double_1darray destination );
+
+    inline bool operator==(const Sphere& rhs) {
+        return
+        position_[0] == rhs.position_[0] &&
+        position_[1] == rhs.position_[1] &&
+        position_[2] == rhs.position_[2] &&
+        position_[3] == rhs.position_[3] &&                      
+        ambient_[0] == rhs.ambient_[0] &&
+        ambient_[1] == rhs.ambient_[1] &&
+        ambient_[2] == rhs.ambient_[2] &&
+        ambient_[3] == rhs.ambient_[3] &&                      
+        diffuse_[0] == rhs.diffuse_[0] &&
+        diffuse_[1] == rhs.diffuse_[1] &&
+        diffuse_[2] == rhs.diffuse_[2] &&
+        diffuse_[3] == rhs.diffuse_[3] &&                      
+        specular_[0] == rhs.specular_[0] &&
+        specular_[1] == rhs.specular_[1] &&
+        specular_[2] == rhs.specular_[2] &&
+        specular_[3] == rhs.specular_[3] &&
+        shininess_ == rhs.shininess_ &&
+        reflection_ == rhs.reflection_ &&
+        radius_ == rhs.radius_;
+    }
 
 private:
     double radius_;

@@ -97,7 +97,14 @@ BOOST_AUTO_TEST_CASE(nearest_intersected_object, * utf::tolerance(0.001))
     direction[1] = 0.31448545;
     direction[2] = -0.94345635;
 
+    auto originCopy = origin.copy();
+    auto directionCopy = direction.copy();
     auto result = render.nearestIntersectedObject(origin, direction);
+
+    for (int i=0; i<3; ++i) {
+        BOOST_CHECK(originCopy[i] == origin[i]);
+        BOOST_CHECK(directionCopy[i] == direction[i]);
+    }
 
     /*
     ({'center': array([-0.2,  0. , -1. ]),
@@ -113,5 +120,24 @@ BOOST_AUTO_TEST_CASE(nearest_intersected_object, * utf::tolerance(0.001))
     Sphere* s = reinterpret_cast<Sphere*>(result.first);
 
     BOOST_CHECK(result.second == 1.60787843946078);
-    BOOST_CHECK(s->getRadius() == 0.7);
+    BOOST_CHECK(*s == sphere1);
+
+    double_1darray origin2(3, 0.0);
+    origin2[0] = -0.16855101;
+    origin2[1] = 0.50566159;
+    origin2[2] = -0.51695619;
+
+    double_1darray direction2(3, 0.0);
+    direction2[0] = 0.58767769;
+    direction2[1] = 0.51101796;
+    direction2[2] = 0.62729226;
+
+    auto result2 = render.nearestIntersectedObject(origin2, direction2);
+    BOOST_CHECK(result2.first == nullptr);
+    BOOST_CHECK(result2.second == std::numeric_limits<double>::infinity());
+}
+
+
+BOOST_AUTO_TEST_CASE(test_inf) {
+    BOOST_CHECK(std::numeric_limits<double>::infinity() > 9);
 }

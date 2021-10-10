@@ -11,7 +11,7 @@ void Screen::calculateEdges() {
     left_ = -1.0;
     right_ = 1.0;
     top_ = 1.0 / ratio_;
-    bottom_ = 1.0 / ratio_;
+    bottom_ = -1.0 / ratio_;
 }
 
 uint32_t Screen::getHeight() {
