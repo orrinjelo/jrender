@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "tnt_ops.h"
 
 Object::Object( 
     double_1darray position,
@@ -91,4 +92,15 @@ void Object::setReflection(double x) {
 
 std::pair<bool, double> Object::intersect( double_1darray origin, double_1darray destination ) {
     return std::pair<bool, double>(false, 0.0);
+}
+
+std::ostream& operator<<(std::ostream& os, const Object& s) {
+    os << "Type: sphere" << std::endl;
+    os << "Position: " << format_d1arr(s.position_) << std::endl;
+    os << "Ambient: " << format_d1arr(s.ambient_) << std::endl;
+    os << "Diffuse: " << format_d1arr(s.diffuse_) << std::endl;
+    os << "Specular: " << format_d1arr(s.specular_) << std::endl;
+    os << "Shininess: " << s.shininess_ << std::endl;
+    os << "Relfection: " << s.reflection_ << std::endl;
+    return os;
 }

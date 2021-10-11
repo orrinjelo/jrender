@@ -24,6 +24,27 @@ public:
 
     void generate(std::string outputFilename);
 
+    obj_vector getObjects();
+    camera_ptr getCamera();
+    screen_ptr getScreen();
+    light_ptr  getLight();
+
+    inline bool operator==(const Render& rhs) {
+        if (objects_.size() != rhs.objects_.size())
+            return false;
+        bool affirm = true;
+        for (unsigned int i=0; i<objects_.size(); ++i) {
+            affirm &= (*(objects_[i]) == *(rhs.objects_[i]));
+        }
+        if (!affirm)
+            return false;
+        if (!(*camera_ == *rhs.camera_))
+            return false;
+        if (!(*screen_ == *rhs.screen_))
+            return false;
+        return *light_ == *rhs.light_;
+    }
+
 private:
     obj_vector objects_;
     camera_ptr camera_;

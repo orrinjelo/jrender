@@ -23,6 +23,16 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Screen& s);
 
+    inline bool operator==(const Screen& rhs) {
+        return
+        height_ == rhs.height_ &&
+        width_ == rhs.width_ &&
+        ratio_ == rhs.ratio_ &&
+        left_ == rhs.left_ &&
+        right_ == rhs.right_ &&
+        top_ == rhs.top_ &&
+        bottom_ == rhs.bottom_;
+    }
 private:
 
     void calculateEdges();

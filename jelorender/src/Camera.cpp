@@ -7,7 +7,9 @@ Camera::Camera() : center_(0.0) {}
 Camera::Camera( double_1darray center ) : center_(center) {}
 
 Camera::Camera( double center[3] ) {
-    center_ = double_1darray(3, center);
+    center_ = double_1darray(3, 0.0);
+    for (int i=0; i<3; ++i)
+        center_[i] = center[i];
 }
 
 Camera::Camera( double centerX, double centerY, double centerZ ) {

@@ -18,6 +18,13 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Camera& c);
 
+    inline bool operator==(const Camera& rhs) {
+        return
+        center_[0] == rhs.center_[0] &&
+        center_[1] == rhs.center_[1] &&
+        center_[2] == rhs.center_[2];
+    }
+
 private:
     double_1darray center_;
 };

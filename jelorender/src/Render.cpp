@@ -113,3 +113,9 @@ void Render::generate(std::string outputFilename) {
     }
     image.write(outputFilename);
 }
+
+
+obj_vector Render::getObjects() { return objects_; }
+camera_ptr Render::getCamera() { return camera_; }
+screen_ptr Render::getScreen() { return screen_; }
+light_ptr  Render::getLight() { return light_; }

@@ -1,6 +1,7 @@
 #define BOOST_TEST_MODULE Units
 #include <boost/test/included/unit_test.hpp>
 #include "Render.h"
+#include "RenderParser.h"
 #include "Sphere.h"
 #include "tnt_ops.h"
 #include "json.hpp"
@@ -186,10 +187,80 @@ BOOST_AUTO_TEST_CASE(test_more_json) {
     BOOST_CHECK(camera_pos[1] == 2.0);
     BOOST_CHECK(camera_pos[2] == 3.0);
 
-    for (auto field : j.at("camera")) {
-        std::cout << field << std::endl;
-    }
+    // for (auto field : j.at("camera")) {
+    //     std::cout << field << std::endl;
+    // }
 
     BOOST_CHECK(j.at("thing") == "fish");
+}
 
+std::string jsonExample = "{\"camera\":{\"position\":[0,0,1]},\"screen\":{\"width\":1024,\"height\":768},\"light\":{\"position\":[5.0,5.0,5.0],\"ambient\":[1.0,1.0,1.0],\"diffuse\":[1.0,1.0,1.0],\"specular\":[1.0,1.0,1.0]},\"objects\":[{\"type\":\"sphere\",\"position\":[-0.2,0.0,-1],\"ambient\":[0.1,0.0,0.0],\"diffuse\":[0.7,0.0,0.0],\"specular\":[1.0,1.0,1.0],\"shininess\":100,\"reflection\":0.5,\"radius\":0.7},{\"type\":\"sphere\",\"position\":[0.1,-0.3,0],\"ambient\":[0.1,0.0,0.1],\"diffuse\":[0.7,0.0,0.7],\"specular\":[1.0,1.0,1.0],\"shininess\":100,\"reflection\":0.5,\"radius\":0.1},{\"type\":\"sphere\",\"position\":[0.0,-9000,0.0],\"ambient\":[0.1,0.1,0.1],\"diffuse\":[0.6,0.6,0.6],\"specular\":[1.0,1.0,1.0],\"shininess\":100,\"reflection\":0.5,\"radius\":8999.3},{\"type\":\"sphere\",\"position\":[-0.3,0.0,0.0],\"ambient\":[0.0,0.1,0.0],\"diffuse\":[0.6,0.6,0.6],\"specular\":[1.0,1.0,1.0],\"shininess\":100,\"reflection\":0.5,\"radius\":0.15}]}";
+
+BOOST_AUTO_TEST_CASE(test_old_way) {
+        // Make camera and screen
+    double cameraPos[3] = {0, 0, 1};
+    camera_ptr camera = std::make_shared<Camera>(cameraPos);
+    screen_ptr screen = std::make_shared<Screen>(IMAGE_HEIGHT, IMAGE_WIDTH);
+    
+    // Make light source
+    double lightPos[3] = {5.0, 5.0, 5.0};
+    double lightAmb[3] = {1.0, 1.0, 1.0};
+    double lightDiff[3] = {1.0, 1.0, 1.0};
+    double lightSpec[3] = {1.0, 1.0, 1.0};
+    light_ptr light = std::make_shared<Light>(lightPos, lightAmb, lightDiff, lightSpec);
+
+    // Make objects
+    obj_vector objects;
+
+    double position1[3] = {-0.2, 0., -1}; 
+    double ambient1[3] = {0.1, 0., 0.};
+    double diffuse1[3] = {0.7, 0., 0.};
+    double specular1[3] = {1.0, 1.0, 1.0};
+    sphere_ptr sphere1 = std::make_shared<Sphere>(position1, ambient1, diffuse1, specular1, 100, 0.5, 0.7);
+
+    double position2[3] = {0.1, -0.3, 0};
+    double ambient2[3] = {0.1, 0., 0.1};
+    double diffuse2[3] = {0.7, 0., 0.7};
+    double specular2[3] = {1.0, 1.0, 1.0};
+    sphere_ptr sphere2 = std::make_shared<Sphere>(position2, ambient2, diffuse2, specular2, 100, 0.5, 0.1);
+
+    double position3[3] = {-0.3, 0, 0}; 
+    double ambient3[3] = {0.0, 0.1, 0.0};
+    double diffuse3[3] = {0.6, 0.6, 0.6};
+    double specular3[3] = {1.0, 1.0, 1.0};
+    sphere_ptr sphere3 = std::make_shared<Sphere>(position3, ambient3, diffuse3, specular3, 100, 0.5, 0.15);
+
+    double position4[3] = {0, -9000, 0}; 
+    double ambient4[3] = {0.1, 0.1, 0.1};
+    double diffuse4[3] = {0.6, 0.6, 0.6};
+    double specular4[3] = {1.0, 1.0, 1.0};
+    sphere_ptr sphere4 = std::make_shared<Sphere>(position4, ambient4, diffuse4, specular4, 100, 0.5, 8999.3);
+
+    objects.push_back(reinterpret_pointer_cast<Object>(sphere1));
+    objects.push_back(reinterpret_pointer_cast<Object>(sphere2));
+    objects.push_back(reinterpret_pointer_cast<Object>(sphere4));
+    objects.push_back(reinterpret_pointer_cast<Object>(sphere3));
+
+    Render render(objects, camera, screen, light);
+
+    RenderParser rp(jsonExample);
+    BOOST_CHECK(*(rp.getRender()->getCamera()) == *(render.getCamera()));
+    BOOST_CHECK(*(rp.getRender()->getCamera()) == *(render.getCamera()));
+    BOOST_CHECK(*(rp.getRender()->getScreen()) == *(render.getScreen()));
+    BOOST_CHECK(*(rp.getRender()->getLight()) == *(render.getLight()));
+    BOOST_CHECK(rp.getRender()->getObjects().size() == render.getObjects().size());
+    for (int i=0; i<rp.getRender()->getObjects().size(); ++i) {
+        auto lhs = reinterpret_pointer_cast<Sphere>(rp.getRender()->getObjects()[i]);
+        auto rhs = reinterpret_pointer_cast<Sphere>(render.getObjects()[i]);
+        auto res = *(lhs) == *(rhs);
+        if (!res) {
+            std::cout << "lhs: " << *lhs << "; rhs: " << *rhs << std::endl;
+        }
+        BOOST_CHECK(res);
+    }
+
+    BOOST_CHECK(render == *rp.getRender());
+
+    render.generate("test1.png");
+    rp.getRender()->generate("test2.png");
 }
