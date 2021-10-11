@@ -24,6 +24,7 @@ public:
         double shininess,
         double reflection
     );
+
     virtual ~Object();
 
     // TODO: make setters for double[3]
@@ -80,5 +81,5 @@ protected:
 };
 
 
-typedef std::unique_ptr<Object> obj_ptr;
-typedef std::vector<Object*> obj_vector;
+typedef std::shared_ptr<Object> obj_ptr;
+typedef std::vector<obj_ptr> obj_vector;

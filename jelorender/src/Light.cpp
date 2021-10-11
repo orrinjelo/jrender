@@ -62,3 +62,11 @@ double_1darray Light::getSpecular() {
 void Light::setSpecular(double_1darray x) {
     specular_ = x;
 }
+
+std::ostream& operator<<(std::ostream& os, const Light& l) {
+    os << "position: " << l.position_ << std::endl;
+    os << "ambient: " << l.ambient_ << std::endl;
+    os << "diffuse: " << l.diffuse_ << std::endl;
+    os << "specular: " << l.specular_ << std::endl;
+    return os;
+}

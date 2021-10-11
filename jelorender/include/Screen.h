@@ -1,6 +1,8 @@
 #pragma once
 
+#include <memory>
 #include <cstdint>
+#include <iostream>
 
 class Screen {
 public:
@@ -19,6 +21,8 @@ public:
     double  getTop();
     double  getBottom();
 
+    friend std::ostream& operator<<(std::ostream& os, const Screen& s);
+
 private:
 
     void calculateEdges();
@@ -31,3 +35,5 @@ private:
     double   top_;
     double   bottom_;
 };
+
+typedef std::shared_ptr<Screen> screen_ptr;

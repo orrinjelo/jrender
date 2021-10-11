@@ -26,3 +26,7 @@ void Camera::setCenter( double_1darray c ) {
     center_ = c;
 }
 
+std::ostream& operator<<(std::ostream& os, const Camera& c) {
+    os << c.center_ << std::endl;
+    return os;
+}

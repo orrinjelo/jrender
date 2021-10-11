@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <memory>
 #include "tnt_types.h"
 
 class Camera {
@@ -14,6 +16,10 @@ public:
     double_1darray getCenter();
     void           setCenter( double_1darray c );
 
+    friend std::ostream& operator<<(std::ostream& os, const Camera& c);
+
 private:
     double_1darray center_;
 };
+
+typedef std::shared_ptr<Camera> camera_ptr;

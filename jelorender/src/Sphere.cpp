@@ -50,3 +50,14 @@ std::pair<bool, double> Sphere::intersect(
     }
     return std::pair<bool, double>(false, 0.0);
 }
+
+std::ostream& operator<<(std::ostream& os, const Sphere& s) {
+    os << "Position: " << s.position_ << std::endl;
+    os << "Ambient: " << s.ambient_ << std::endl;
+    os << "Diffuse: " << s.diffuse_ << std::endl;
+    os << "Specular: " << s.specular_ << std::endl;
+    os << "Shininess: " << s.shininess_ << std::endl;
+    os << "Relfection: " << s.reflection_ << std::endl;
+    os << "Radius: " << s.radius_ << std::endl;
+    return os;
+}

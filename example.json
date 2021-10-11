@@ -1,0 +1,57 @@
+{
+    "camera": {
+        "position": [0, 0, 1]
+    },
+    "screen": {
+        "width": 1024,
+        "height": 768
+    },
+    "light": {
+        "position": [5.0, 5.0, 5.0],
+        "ambient": [1.0, 1.0, 1.0],
+        "diffuse": [1.0, 1.0, 1.0],
+        "specular": [1.0, 1.0, 1.0]
+    },
+    "objects": [
+        {
+            "type": "sphere",
+            "position": [-0.2, 0.0, -1],
+            "ambient": [0.1, 0.0, 0.0],
+            "diffuse": [0.7, 0.0, 0.0],
+            "specular": [1.0, 1.0, 1.0],
+            "shininess": 100,
+            "reflection": 0.5,
+            "radius": 0.7
+        },
+        {
+            "type": "sphere",
+            "position": [0.1, -0.3, 0],
+            "ambient": [0.1, 0.0, 0.1],
+            "diffuse": [0.7, 0.0, 0.0],
+            "specular": [1.0, 1.0, 1.0],
+            "shininess": 100,
+            "reflection": 0.5,
+            "radius": 0.1
+        },
+        {
+            "type": "sphere",
+            "position": [0.0, -9000, 0.0],
+            "ambient": [0.1, 0.1, 0.1],
+            "diffuse": [0.6, 0.6, 0.6],
+            "specular": [1.0, 1.0, 1.0],
+            "shininess": 100,
+            "reflection": 0.5,
+            "radius": 8999.3
+        },
+        {
+            "type": "sphere",
+            "position": [-0.3, 0.0, 0.0],
+            "ambient": [0.0, 0.1, 0.0],
+            "diffuse": [0.0, 0.6, 0.0],
+            "specular": [1.0, 1.0, 1.0],
+            "shininess": 100,
+            "reflection": 0.5,
+            "radius": 0.15
+        }
+    ]
+}

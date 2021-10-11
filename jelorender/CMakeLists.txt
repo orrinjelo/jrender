@@ -21,7 +21,7 @@ find_package(Threads REQUIRED)
 
 find_package(
     Boost
-    COMPONENTS program_options
+    COMPONENTS program_options log
     REQUIRED
 )
 
@@ -35,6 +35,7 @@ add_executable(
     src/Object.cpp
     src/Sphere.cpp
     src/Render.cpp
+    src/RenderParser.cpp
 )
 
 target_compile_features (
@@ -64,6 +65,7 @@ target_link_libraries(
         Threads::Threads
         m
         png
+        ${Boost_LIBRARIES}
 )
 
 # Tests
@@ -75,7 +77,8 @@ add_executable(
     src/Light.cpp
     src/Object.cpp
     src/Sphere.cpp
-    src/Render.cpp    
+    src/Render.cpp
+    src/RenderParser.cpp
 )
 
 # indicates the include paths
@@ -100,6 +103,7 @@ target_link_libraries(
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
     m
     png
+    ${Boost_LIBRARIES}
 )
 
 add_test(NAME unit_tests COMMAND unit_tests)

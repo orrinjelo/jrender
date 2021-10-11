@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+#include <memory>
 #include "tnt_types.h"
 
 class Light {
@@ -33,9 +35,13 @@ public:
     double_1darray getSpecular();
     void setSpecular(double_1darray x);
 
+    friend std::ostream& operator<<(std::ostream& os, const Light& l);
+
 private:
     double_1darray position_;
     double_1darray ambient_;
     double_1darray diffuse_;
     double_1darray specular_;
 };
+
+typedef std::shared_ptr<Light> light_ptr;
