@@ -1,4 +1,5 @@
 #include "Light.h"
+#include "tnt_ops.h"
 
 Light::Light( double_1darray position, double_1darray ambient, 
     double_1darray diffuse, double_1darray specular ) : position_(position),
@@ -64,9 +65,9 @@ void Light::setSpecular(double_1darray x) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Light& l) {
-    os << "position: " << l.position_ << std::endl;
-    os << "ambient: " << l.ambient_ << std::endl;
-    os << "diffuse: " << l.diffuse_ << std::endl;
-    os << "specular: " << l.specular_ << std::endl;
+    os << "position: " << format_d1arr(l.position_) << std::endl;
+    os << "ambient: " << format_d1arr(l.ambient_) << std::endl;
+    os << "diffuse: " << format_d1arr(l.diffuse_) << std::endl;
+    os << "specular: " << format_d1arr(l.specular_) << std::endl;
     return os;
 }

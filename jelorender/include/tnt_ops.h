@@ -1,5 +1,6 @@
 #pragma once
 
+#include <sstream>
 #include <cmath>
 #include "tnt/tnt.h"
 #include "tnt_types.h"
@@ -45,4 +46,11 @@ T reflectVector(T v, T n) {
     nscale[1] = n[1] * scalar;
     nscale[2] = n[2] * scalar;
     return v - nscale;
+}
+
+template<class T>
+std::string format_d1arr(T &in) {
+    std::stringstream ss;
+    ss << "(" << in[0] << ", "<< in[1] << ", "<< in[2] << ")";
+    return ss.str();
 }

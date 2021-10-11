@@ -3,7 +3,7 @@
 #include "Render.h"
 #include "tnt_ops.h"
 
-#define MAX_DEPTH 3
+#define MAX_DEPTH 1
 
 Render::Render(
     obj_vector objects,

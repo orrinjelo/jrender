@@ -1,5 +1,6 @@
 #include "RenderParser.h"
 #include "jpointers.h"
+#include "logging.h"
 
 using namespace nlohmann;
 
@@ -11,11 +12,15 @@ RenderParser::RenderParser(std::string jsonStr) {
     j.at("camera").at("position").get_to(camera_pos);
     camera_ptr camera = std::make_shared<Camera>(camera_pos);
 
+    LOG_B(debug) << "Camera: " << *camera;
+
     // Screen
     double height, width;
     j.at("screen").at("height").get_to(height);
     j.at("screen").at("width").get_to(width);
     screen_ptr screen = std::make_shared<Screen>(height, width);
+
+    LOG_B(debug) << "Screen: " << *screen;
 
     // Make light source
     double lightPos[3];
@@ -27,6 +32,8 @@ RenderParser::RenderParser(std::string jsonStr) {
     j.at("light").at("diffuse").get_to(lightDiff);
     j.at("light").at("specular").get_to(lightSpec);
     light_ptr light = std::make_shared<Light>(lightPos, lightAmb, lightDiff, lightSpec);
+
+    LOG_B(debug) << "Light: " << *light;
 
     // Objects
     obj_vector objects;
@@ -52,7 +59,7 @@ RenderParser::RenderParser(std::string jsonStr) {
             sphere_ptr sphere = std::make_shared<Sphere>(position, ambient, diffuse, specular, shininess,
             reflection, radius);
 
-            // std::cout << "obj: " << sphere << std::endl;
+            LOG_B(debug) << "Object: " << *sphere;
             objects.push_back(reinterpret_pointer_cast<Object>(sphere));
         }
     }

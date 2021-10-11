@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "tnt_ops.h"
 
 using namespace TNT;
 
@@ -27,6 +28,6 @@ void Camera::setCenter( double_1darray c ) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Camera& c) {
-    os << c.center_ << std::endl;
+    os << format_d1arr(c.center_);
     return os;
 }

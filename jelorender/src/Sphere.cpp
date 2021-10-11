@@ -52,10 +52,11 @@ std::pair<bool, double> Sphere::intersect(
 }
 
 std::ostream& operator<<(std::ostream& os, const Sphere& s) {
-    os << "Position: " << s.position_ << std::endl;
-    os << "Ambient: " << s.ambient_ << std::endl;
-    os << "Diffuse: " << s.diffuse_ << std::endl;
-    os << "Specular: " << s.specular_ << std::endl;
+    os << "Type: sphere" << std::endl;
+    os << "Position: " << format_d1arr(s.position_) << std::endl;
+    os << "Ambient: " << format_d1arr(s.ambient_) << std::endl;
+    os << "Diffuse: " << format_d1arr(s.diffuse_) << std::endl;
+    os << "Specular: " << format_d1arr(s.specular_) << std::endl;
     os << "Shininess: " << s.shininess_ << std::endl;
     os << "Relfection: " << s.reflection_ << std::endl;
     os << "Radius: " << s.radius_ << std::endl;
